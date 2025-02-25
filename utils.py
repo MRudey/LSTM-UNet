@@ -1,9 +1,10 @@
-from PIL import ImageSequence, Image
-import numpy as np
 from datetime import datetime
-import Networks as Nets
 
-__author__ = 'arbellea@post.bgu.ac.il'
+import Networks as Nets
+import numpy as np
+from PIL import Image, ImageSequence
+
+__author__ = "arbellea@post.bgu.ac.il"
 
 
 def read_multi_tiff(path, start_z=None, stop_z=None):
@@ -23,7 +24,9 @@ def read_multi_tiff(path, start_z=None, stop_z=None):
                     break
             images = np.stack(images_list, 0).astype(np.float32)
         else:
-            images = np.stack(ImageSequence.Iterator(img), 0).astype(np.float32)
+            images = np.stack(ImageSequence.Iterator(img), 0).astype(
+                np.float32
+            )
         img.close()
         return images
     except Exception:
@@ -31,8 +34,8 @@ def read_multi_tiff(path, start_z=None, stop_z=None):
 
 
 def log_print(*args):
-    now_string = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print('{}:'.format(now_string), *args)
+    now_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print("{}:".format(now_string), *args)
 
 
 def get_model(model_name: str):
