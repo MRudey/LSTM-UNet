@@ -8,19 +8,12 @@ import losses
 import Networks as Nets
 import Params
 import requests
-
-# noinspection PyPackageRequirements
 import tensorflow as tf
+import tensorflow.keras as k
 from utils import log_print
 
 __author__ = "arbellea@post.bgu.ac.il"
 
-try:
-    # noinspection PyPackageRequirements
-    import tensorflow.python.keras as k
-except AttributeError:
-    # noinspection PyPackageRequirements,PyUnresolvedReferences
-    import tensorflow.keras as k
 
 os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
 print(f"Using Tensorflow version {tf.__version__}")
@@ -69,7 +62,9 @@ def train():
         val_seg_measure = k.metrics.Mean(name="val_seg_measure")
 
         # Save Checkpoints
-        optimizer = tf.compat.v2.keras.optimizers.Adam(lr=params.learning_rate)
+        optimizer = tf.compat.v2.keras.optimizers.Adam(
+            learning_rate=params.learning_rate
+        )
         ckpt = tf.train.Checkpoint(
             step=tf.Variable(0, dtype=tf.int64), optimizer=optimizer, net=model
         )
@@ -354,9 +349,9 @@ def train():
             if not params.dry_run:
                 log_print("Saving Model of inference:")
                 model_fname = os.path.join(
-                    params.experiment_save_dir, "model.ckpt"
+                    params.experiment_save_dir, "model.weights.h5"
                 )
-                model.save_weights(model_fname, save_format="tf")
+                model.save_weights(model_fname)
                 with open(
                     os.path.join(
                         params.experiment_save_dir, "model_params.pickle"

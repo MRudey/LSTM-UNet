@@ -2,13 +2,10 @@ import tensorflow as tf
 
 __author__ = "arbellea@post.bgu.ac.il"
 
-try:
-    import tensorflow.python.keras as k
-except AttributeError:
-    import tensorflow.keras as k
 from typing import List
 
 import numpy as np
+import tensorflow.keras as k
 
 DEFAULT_NET_DOWN_PARAMS = {
     "down_conv_kernels": [

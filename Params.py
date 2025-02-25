@@ -1,15 +1,18 @@
 import os
 from datetime import datetime
+from pathlib import Path
 
 import DataHandeling
 import Networks as Nets
 
 __author__ = "arbellea@post.bgu.ac.il"
 
-
-ROOT_DATA_DIR = "~/CellTrackingChallenge/Training/"
-ROOT_TEST_DATA_DIR = "~/CellTrackingChallenge/Test/"
-ROOT_SAVE_DIR = "~/LSTM-UNet-Outputs/"
+ROOT_DATA_DIR = Path("~/Documents/NanoSegment_Alex/images").expanduser()
+ROOT_TEST_DATA_DIR = Path("~/Documents/NanoSegment_Alex/images").expanduser()
+ROOT_SAVE_DIR = Path(
+    "~/Documents/NanoSegment_Alex/LSTM-UNet-Outputs/"
+).expanduser()
+DATA_SET_NAME = "PhC-C2DH-U373_training dataset"
 
 
 class ParamsBase(object):
@@ -39,10 +42,10 @@ class CTCParams(ParamsBase):
     data_provider_class = DataHandeling.CTCRAMReaderSequence2D
     root_data_dir = ROOT_DATA_DIR
     train_sequence_list = [
-        ("Fluo-N2DH-SIM+", "01"),
-        ("Fluo-N2DH-SIM+", "02"),
+        (DATA_SET_NAME, "01"),
+        (DATA_SET_NAME, "02"),
     ]  # [('Dataset Name', 'SequenceNumber'), ('Dataset Name', 'SequenceNumber'), ]
-    val_sequence_list = [("Fluo-N2DH-SIM+", "01"), ("Fluo-N2DH-SIM+", "02")]
+    val_sequence_list = [(DATA_SET_NAME, "01"), (DATA_SET_NAME, "02")]
     crop_size = (128, 128)  # (height, width) preferably height=width
     batch_size = 5
     unroll_len = 4
